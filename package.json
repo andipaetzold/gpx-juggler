@@ -9,12 +9,14 @@
     "@types/lodash": "4.14.173",
     "@types/react": "17.0.21",
     "@types/react-dom": "17.0.9",
+    "@types/recharts": "1.8.20",
     "date-fns": "2.24.0",
     "fast-xml-parser": "3.20.0",
     "lodash": "4.17.21",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-scripts": "4.0.3"
+    "react-scripts": "4.0.3",
+    "recharts": "2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
