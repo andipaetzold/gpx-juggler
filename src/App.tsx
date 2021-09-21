@@ -25,7 +25,7 @@ export function App() {
     <Container>
       <LoadButton addSeries={addSeries} />
 
-      {SERIES_TYPES.map((type) => {
+      {SERIES_TYPES.filter((t) => t !== "coordinate").map((type) => {
         const filteredSeries = series.filter((s) => s.type === type);
 
         if (filteredSeries.length === 0) {
