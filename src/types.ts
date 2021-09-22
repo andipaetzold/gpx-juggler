@@ -1,11 +1,11 @@
-export type SeriesType =
+export type StreamType =
   | "heartrate"
   | "power"
   | "cadence"
   | "elevation"
   | "coordinate";
 
-export interface BaseSeries<Type extends SeriesType, Value> {
+export interface BaseStream<Type extends StreamType, Value> {
   type: Type;
   data: {
     timestamp: number;
@@ -13,18 +13,18 @@ export interface BaseSeries<Type extends SeriesType, Value> {
   }[];
 }
 
-export type HeartRateSeries = BaseSeries<"heartrate", number>;
-export type CadenceSeries = BaseSeries<"cadence", number>;
-export type PowerSeries = BaseSeries<"power", number>;
-export type ElevationSeries = BaseSeries<"elevation", number>;
-export type CoordinateSeries = BaseSeries<
+export type HeartRateStream = BaseStream<"heartrate", number>;
+export type CadenceStream = BaseStream<"cadence", number>;
+export type PowerStream = BaseStream<"power", number>;
+export type ElevationStream = BaseStream<"elevation", number>;
+export type CoordinateStream = BaseStream<
   "coordinate",
   [latitude: number, longitude: number]
 >;
 
-export type Series =
-  | HeartRateSeries
-  | CadenceSeries
-  | PowerSeries
-  | ElevationSeries
-  | CoordinateSeries;
+export type Stream =
+  | HeartRateStream
+  | CadenceStream
+  | PowerStream
+  | ElevationStream
+  | CoordinateStream;

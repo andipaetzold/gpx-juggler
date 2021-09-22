@@ -1,7 +1,7 @@
 import shuffle from "lodash/shuffle";
-import { SeriesType } from "./types";
+import { StreamType } from "./types";
 
-export const SERIES_TYPES: SeriesType[] = [
+export const STREAM_TYPES: StreamType[] = [
   "heartrate",
   "power",
   "cadence",

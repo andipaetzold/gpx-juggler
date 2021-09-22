@@ -10,25 +10,25 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { COLORS, SERIES_TYPES } from "./constants";
-import { Series } from "./types";
+import { COLORS, STREAM_TYPES } from "./constants";
+import { Stream } from "./types";
 
 interface Props {
-  series: Series[];
+  streams: Stream[];
 }
 
-export function Editor({ series }: Props) {
+export function Editor({ streams }: Props) {
   return (
     <>
-      {SERIES_TYPES.filter((t) => t !== "coordinate").map((type) => {
-        const filteredSeries = series.filter((s) => s.type === type);
+      {STREAM_TYPES.filter((t) => t !== "coordinate").map((type) => {
+        const filteredStreams = streams.filter((s) => s.type === type);
 
-        if (filteredSeries.length === 0) {
+        if (filteredStreams.length === 0) {
           return null;
         }
 
         const timestamps = uniq(
-          filteredSeries.flatMap((s) => s.data.map((d) => d.timestamp))
+          filteredStreams.flatMap((s) => s.data.map((d) => d.timestamp))
         );
 
         const firstTimestamp = Math.min(...timestamps);
@@ -37,7 +37,7 @@ export function Editor({ series }: Props) {
           timestamp: (t - firstTimestamp) / 60,
 
           ...Object.fromEntries(
-            filteredSeries
+            filteredStreams
               .map((s, si) => {
                 // @ts-ignore
                 const value = s.data.find((d) => d.timestamp === t)?.value;
@@ -83,7 +83,7 @@ export function Editor({ series }: Props) {
                     allowDecimals={false}
                   />
                   <Tooltip />
-                  {filteredSeries.map((_s, si) => (
+                  {filteredStreams.map((_s, si) => (
                     <Line
                       key={si}
                       type="monotone"

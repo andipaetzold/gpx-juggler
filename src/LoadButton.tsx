@@ -1,14 +1,14 @@
-import { Series } from "./types";
+import { Stream } from "./types";
 import { Button } from "@mui/material";
 import styles from "./LoadButton.module.scss";
 import { ChangeEvent, useRef } from "react";
 import { loadGPXFile } from "./services/loaders/GPXLoader";
 
 interface Props {
-  addSeries: (series: Series) => void;
+  addStream: (stream: Stream) => void;
 }
 
-export function LoadButton({ addSeries }: Props) {
+export function LoadButton({ addStream }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -18,8 +18,8 @@ export function LoadButton({ addSeries }: Props) {
 
     for (let i = 0; i < event.target.files.length; i++) {
       try {
-        const series = await parseFile(event.target.files[i]);
-        series.forEach((s) => addSeries(s));
+        const stream = await parseFile(event.target.files[i]);
+        stream.forEach((s) => addStream(s));
       } catch (e) {
         console.error(e);
       }
@@ -50,7 +50,7 @@ export function LoadButton({ addSeries }: Props) {
   );
 }
 
-async function parseFile(file: File): Promise<Series[]> {
+async function parseFile(file: File): Promise<Stream[]> {
   if (!file.name.endsWith(".gpx")) {
     throw new Error("Unsupported file type");
   }

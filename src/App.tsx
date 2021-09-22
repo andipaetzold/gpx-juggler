@@ -2,19 +2,19 @@ import { Container } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { Editor } from "./Editor";
 import { LoadButton } from "./LoadButton";
-import { Series } from "./types";
+import { Stream } from "./types";
 
 export function App() {
-  const [series, setSeries] = useState<Series[]>([]);
+  const [streams, setStreams] = useState<Stream[]>([]);
 
-  const addSeries = useCallback((series: Series) => {
-    setSeries((prevSeries) => [...prevSeries, series]);
+  const addStreams = useCallback((stream: Stream) => {
+    setStreams((prevStream) => [...prevStream, stream]);
   }, []);
 
   return (
     <Container>
-      <LoadButton addSeries={addSeries} />
-      <Editor series={series} />
+      <LoadButton addStream={addStreams} />
+      <Editor streams={streams} />
     </Container>
   );
 }

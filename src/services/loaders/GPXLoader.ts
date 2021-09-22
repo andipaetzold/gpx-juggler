@@ -1,4 +1,4 @@
-import { Series, SeriesType } from "../../types";
+import { Stream, StreamType } from "../../types";
 import { readFileAsString } from "../../util";
 import { parse as parseXml, X2jOptionsOptional } from "fast-xml-parser";
 import parseISO from "date-fns/parseISO";
@@ -12,38 +12,38 @@ const options: X2jOptionsOptional = {
   parseAttributeValue: true,
 };
 
-export async function loadGPXFile(file: File): Promise<Series[]> {
+export async function loadGPXFile(file: File): Promise<Stream[]> {
   const fileData = await readFileAsString(file);
   const xml = parseXml(fileData, options);
 
   const trackPoints: any[] = xml.gpx[0].trk[0].trkseg[0].trkpt;
 
-  const series: Series[] = [];
+  const streams: Stream[] = [];
 
   Object.entries(valueGetter).forEach(([type, getter]) => {
     if (trackPoints.map(getter).every((value) => value === null)) {
       return;
     }
 
-    const newSeries: Series = {
-      type: type as SeriesType,
+    const newStream: Stream = {
+      type: type as StreamType,
       data: range(0, trackPoints.length).map((i) => ({
         timestamp: getTimestampFromTrackPoint(trackPoints[i]),
         value: getter(trackPoints[i]),
       })),
     };
 
-    series.push(newSeries);
+    streams.push(newStream);
   });
 
-  return series;
+  return streams;
 }
 
 function getTimestampFromTrackPoint(trackPoint: any): number {
   return getUnixTime(parseISO(trackPoint.time));
 }
 
-const valueGetter: { [type in SeriesType]: (trackPoint: any) => any } = {
+const valueGetter: { [type in StreamType]: (trackPoint: any) => any } = {
   heartrate: getHeartRateFromTrackPoint,
   cadence: getCadenceFromTrackPoint,
   coordinate: getCoordinateFromTrackPoint,
