@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { SERIES_TYPES } from "./constants";
+import { COLORS, SERIES_TYPES } from "./constants";
 import { LoadButton } from "./LoadButton";
 import { Series } from "./types";
 
@@ -92,6 +92,7 @@ export function App() {
                       dataKey={`s${si}`}
                       isAnimationActive={false}
                       dot={false}
+                      stroke={COLORS[si % COLORS.length]}
                     />
                   ))}
                 </LineChart>
