@@ -75,7 +75,10 @@ export function App() {
                   <XAxis
                     dataKey="timestamp"
                     type="number"
-                    domain={["dataMin", "dataMax"]}
+                    domain={[
+                      "dataMin",
+                      (dataMax: number) => Math.ceil(dataMax),
+                    ]}
                     allowDecimals={false}
                     tickFormatter={(timestamp) => `${timestamp}min`}
                   />
