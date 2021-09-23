@@ -3,6 +3,8 @@ import formatISO from "date-fns/formatISO";
 import { sortBy, uniq } from "lodash";
 import builder from "xmlbuilder";
 import { GPXData } from "./types";
+import FileSaver from "file-saver";
+import slugify from "slugify";
 
 interface Props {
   data: GPXData;
@@ -10,7 +12,11 @@ interface Props {
 
 export function SaveButton({ data }: Props) {
   const handleClick = () => {
-    console.log(createXML(data));
+    const fileData = createXML(data);
+    FileSaver.saveAs(
+      new Blob([fileData], { type: "text/xml" }),
+      `${slugify(data.name || "export")}.gpx`
+    );
   };
 
   return (
