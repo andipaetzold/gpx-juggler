@@ -3,18 +3,18 @@ import React, { useCallback, useState } from "react";
 import { Editor } from "./Editor";
 import { LoadButton } from "./LoadButton";
 import { SaveButton } from "./SaveButton";
-import { Stream } from "./types";
+import { GPXData } from "./types";
 
 export function App() {
-  const [streams, setStreams] = useState<Stream[]>([]);
+  const [gpxData, setGPXData] = useState<GPXData[]>([]);
 
-  const addStreams = useCallback((stream: Stream) => {
-    setStreams((prevStream) => [...prevStream, stream]);
+  const addGPXData = useCallback((data: GPXData) => {
+    setGPXData((prevData) => [...prevData, data]);
   }, []);
 
   return (
     <Container>
-      <LoadButton addStream={addStreams} />
+      <LoadButton addGPXData={addGPXData} />
       <SaveButton
         data={{
           name: "Test",
@@ -30,7 +30,7 @@ export function App() {
           },
         }}
       />
-      <Editor streams={streams} />
+      {gpxData.length > 0 && <Editor gpxData={gpxData} />}
     </Container>
   );
 }

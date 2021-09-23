@@ -1,4 +1,4 @@
-import { Stream, StreamType } from "../../types";
+import { BaseStream, GPXData, StreamType } from "../../types";
 import { readFileAsString } from "../../util";
 import { parse as parseXml, X2jOptionsOptional } from "fast-xml-parser";
 import parseISO from "date-fns/parseISO";
@@ -12,44 +12,61 @@ const options: X2jOptionsOptional = {
   parseAttributeValue: true,
 };
 
-export async function loadGPXFile(file: File): Promise<Stream[]> {
+export async function loadGPXFile(file: File): Promise<GPXData> {
   const fileData = await readFileAsString(file);
   const xml = parseXml(fileData, options);
 
-  const trackPoints: any[] = xml.gpx[0].trk[0].trkseg[0].trkpt;
+  const trk = xml.gpx[0].trk[0];
+  const trackPoints: any[] = trk.trkseg[0].trkpt;
 
-  const streams: Stream[] = [];
+  return {
+    name: trk.name,
+    type: trk.type,
+    coordinate: getStream<[number, number], "coordinate">(
+      trackPoints,
+      "coordinate",
+      getCoordinateFromTrackPoint
+    ),
+    cadence: getStream<number, "cadence">(
+      trackPoints,
+      "cadence",
+      getCadenceFromTrackPoint
+    ),
+    elevation: getStream<number, "elevation">(
+      trackPoints,
+      "elevation",
+      getElevationFromTrackPoint
+    ),
+    heartrate: getStream<number, "heartrate">(
+      trackPoints,
+      "heartrate",
+      getHeartRateFromTrackPoint
+    ),
+    power: getStream<number, "power">(
+      trackPoints,
+      "power",
+      getPowerFromTrackPoint
+    ),
+  };
+}
 
-  Object.entries(valueGetter).forEach(([type, getter]) => {
-    if (trackPoints.map(getter).every((value) => value === null)) {
-      return;
-    }
-
-    const newStream: Stream = {
-      type: type as StreamType,
-      data: range(0, trackPoints.length).map((i) => ({
-        timestamp: getTimestampFromTrackPoint(trackPoints[i]),
-        value: getter(trackPoints[i]),
-      })),
-    };
-
-    streams.push(newStream);
-  });
-
-  return streams;
+function getStream<StreamValue, Type extends StreamType, TrackPoint = any>(
+  trackPoints: TrackPoint[],
+  type: Type,
+  getter: (trackPoint: TrackPoint) => any
+): BaseStream<Type, StreamValue> {
+  return {
+    type: type,
+    data: range(0, trackPoints.length).map((i) => ({
+      timestamp: getTimestampFromTrackPoint(trackPoints[i]),
+      value: getter(trackPoints[i]),
+    })),
+  };
 }
 
 function getTimestampFromTrackPoint(trackPoint: any): number {
   return getUnixTime(parseISO(trackPoint.time));
 }
-
-const valueGetter: { [type in StreamType]: (trackPoint: any) => any } = {
-  heartrate: getHeartRateFromTrackPoint,
-  cadence: getCadenceFromTrackPoint,
-  coordinate: getCoordinateFromTrackPoint,
-  elevation: getElevationFromTrackPoint,
-  power: getPowerFromTrackPoint,
-};
 
 function getHeartRateFromTrackPoint(trackPoint: any): number | null {
   return (

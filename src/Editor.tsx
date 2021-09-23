@@ -9,15 +9,15 @@ import {
 import React, { Fragment, useState } from "react";
 import { LineChart } from "./charts/LineChart";
 import { ACTIVITY_TYPE, STREAM_TYPES } from "./constants";
-import { Stream, StreamType } from "./types";
+import { GPXData, Stream, StreamType } from "./types";
 
 interface Props {
-  streams: Stream[];
+  gpxData: GPXData[];
 }
 
-export function Editor({ streams }: Props) {
-  const [name, setName] = useState("Name");
-  const [type, setType] = useState(0);
+export function Editor({ gpxData }: Props) {
+  const [name, setName] = useState(gpxData[0].name);
+  const [type, setType] = useState(gpxData[0].type);
 
   return (
     <>
@@ -43,7 +43,9 @@ export function Editor({ streams }: Props) {
       </Card>
 
       {STREAM_TYPES.filter((t) => t !== "coordinate").map((type) => {
-        const filteredStreams = streams.filter((s) => s.type === type);
+        const filteredStreams = gpxData
+          .map((data) => data[type])
+          .filter((stream): stream is Stream => stream !== undefined);
 
         if (filteredStreams.length === 0) {
           return null;
