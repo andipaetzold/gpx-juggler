@@ -28,3 +28,13 @@ export type Stream =
   | PowerStream
   | ElevationStream
   | CoordinateStream;
+
+export interface GPXData {
+  name: string;
+  type: number;
+  coordinate: CoordinateStream;
+  heartrate?: HeartRateStream;
+  cadence?: CadenceStream;
+  power?: PowerStream;
+  elevation?: ElevationStream;
+}
