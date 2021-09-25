@@ -1,5 +1,6 @@
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart as LineChartComponent,
   ResponsiveContainer,
@@ -10,9 +11,11 @@ import {
 import { COLORS } from "../constants";
 import { Stream } from "../types";
 import uniq from "lodash/uniq";
+import { values } from "lodash";
+import { formatTime } from "../util";
 
 interface Props {
-  streams: Stream[];
+  streams: (Stream & { name: string })[];
 }
 
 export function LineChart({ streams }: Props) {
@@ -65,8 +68,12 @@ export function LineChart({ streams }: Props) {
             type="number"
             allowDecimals={false}
           />
-          <Tooltip />
-          {streams.map((_s, si) => (
+          <Tooltip
+            labelFormatter={(value: number) => formatTime(value)}
+            formatter={(value: number) => Math.round(value)}
+          />
+          <Legend />
+          {streams.map((s, si) => (
             <Line
               key={si}
               type="monotone"
@@ -74,6 +81,7 @@ export function LineChart({ streams }: Props) {
               isAnimationActive={false}
               dot={false}
               stroke={COLORS[si % COLORS.length]}
+              name={s.name}
             />
           ))}
         </LineChartComponent>

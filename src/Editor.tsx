@@ -21,7 +21,7 @@ export function Editor({ gpxData }: Props) {
 
   return (
     <>
-      <Card>
+      <Card sx={{ mb: 3 }}>
         <CardContent>
           <TextField
             value={name}
@@ -44,19 +44,25 @@ export function Editor({ gpxData }: Props) {
 
       {STREAM_TYPES.filter((t) => t !== "coordinate").map((type) => {
         const filteredStreams = gpxData
-          .map((data) => data[type])
-          .filter((stream): stream is Stream => stream !== undefined);
+          .map((data) => ({ ...data[type], name: data.name }))
+          .filter(
+            (stream): stream is Stream & { name: string } =>
+              stream !== undefined
+          );
 
         if (filteredStreams.length === 0) {
           return null;
         }
 
         return (
-          <Fragment key={type}>
-            <Typography variant="h3">{streamNames[type]}</Typography>
-
-            <LineChart streams={filteredStreams} />
-          </Fragment>
+          <Card key={type} sx={{ mb: 3 }}>
+            <CardContent>
+              <Typography variant="h5" gutterBottom component="div">
+                {streamNames[type]}
+              </Typography>
+              <LineChart streams={filteredStreams} />
+            </CardContent>
+          </Card>
         );
       })}
     </>
