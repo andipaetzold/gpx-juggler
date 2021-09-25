@@ -1,4 +1,3 @@
-import shuffle from "lodash/shuffle";
 import { StreamType } from "./types";
 
 export const STREAM_TYPES: StreamType[] = [
@@ -9,27 +8,27 @@ export const STREAM_TYPES: StreamType[] = [
   "coordinate",
 ];
 
-export const COLORS = shuffle([
+export const COLORS = [
   "#F44336",
-  "#E91E63",
   "#9C27B0",
-  "#673AB7",
   "#3F51B5",
-  "#2196F3",
   "#03A9F4",
-  "#00BCD4",
   "#009688",
-  "#4CAF50",
   "#8BC34A",
-  "#CDDC39",
   "#FFEB3B",
-  "#FFC107",
   "#FF9800",
-  "#FF5722",
   "#795548",
-  "#9E9E9E",
   "#607D8B",
-]);
+  "#E91E63",
+  "#673AB7",
+  "#2196F3",
+  "#00BCD4",
+  "#4CAF50",
+  "#CDDC39",
+  "#FFC107",
+  "#FF5722",
+  "#9E9E9E",
+];
 
 export const ACTIVITY_TYPE = {
   0: "Activity",
