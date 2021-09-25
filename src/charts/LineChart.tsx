@@ -11,7 +11,6 @@ import {
 import { COLORS } from "../constants";
 import { Stream } from "../types";
 import uniq from "lodash/uniq";
-import { values } from "lodash";
 import { formatTime } from "../util";
 
 interface Props {
