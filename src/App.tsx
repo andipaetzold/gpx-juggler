@@ -1,16 +1,12 @@
 import { AppBar, Container, Stack, Toolbar, Typography } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Editor } from "./Editor";
 import { LoadButton } from "./LoadButton";
 import { SaveButton } from "./SaveButton";
-import { GPXData } from "./types";
+import { useStore } from "./store";
 
 export function App() {
-  const [gpxData, setGPXData] = useState<GPXData[]>([]);
-
-  const addGPXData = useCallback((data: GPXData) => {
-    setGPXData((prevData) => [...prevData, data]);
-  }, []);
+  const addFile = useStore((s) => s.addFile);
 
   return (
     <>
@@ -24,7 +20,7 @@ export function App() {
       <Container>
         <Stack spacing={2} direction="column">
           <Stack spacing={2} direction="row">
-            <LoadButton addGPXData={addGPXData} />
+            <LoadButton addGPXData={addFile} />
             <SaveButton
               data={{
                 name: "Test",
@@ -41,7 +37,7 @@ export function App() {
               }}
             />
           </Stack>
-          {gpxData.length > 0 && <Editor gpxData={gpxData} />}
+          <Editor />
         </Stack>
       </Container>
     </>

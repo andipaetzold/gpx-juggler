@@ -7,21 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import { LineChart } from "./charts/LineChart";
-import { GPXData, Stream, StreamType } from "./types";
+import { useStore } from "./store";
+import { StreamType } from "./types";
 
 interface Props {
-  gpxData: GPXData[];
   type: StreamType;
 }
 
-export function StreamEditor({ gpxData, type }: Props) {
-  const filteredStreams = gpxData
-    .map((data) => ({ ...data[type], name: data.name }))
-    .filter(
-      (stream): stream is Stream & { name: string } => stream !== undefined
-    );
+export function StreamEditor({ type }: Props) {
+  const files = useStore((s) => s.files);
 
-  if (filteredStreams.length === 0) {
+  const filesWithType = files.filter((file) => file[type]);
+
+  if (filesWithType.length === 0) {
     return null;
   }
 
@@ -29,14 +27,19 @@ export function StreamEditor({ gpxData, type }: Props) {
     <Card>
       <CardContent>
         <FormGroup aria-label="position" row>
-          {filteredStreams.map((s, si) => (
-            <FormControlLabel value={s} control={<Checkbox />} label={s.name} />
+          {filesWithType.map((file) => (
+            <FormControlLabel
+              key={file.id}
+              value={file.id}
+              control={<Checkbox />}
+              label={file.name}
+            />
           ))}
         </FormGroup>
         <Typography variant="h5" gutterBottom component="div">
           {names[type]}
         </Typography>
-        <LineChart streams={filteredStreams} />
+        <LineChart files={filesWithType} type={type} />
       </CardContent>
     </Card>
   );

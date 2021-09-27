@@ -9,17 +9,18 @@ import {
   YAxis,
 } from "recharts";
 import { COLORS } from "../constants";
-import { Stream } from "../types";
+import { GPXData, StreamType } from "../types";
 import uniq from "lodash/uniq";
 import { formatTime } from "../util";
 
 interface Props {
-  streams: (Stream & { name: string })[];
+  files: Array<GPXData & { id: string }>;
+  type: StreamType;
 }
 
-export function LineChart({ streams }: Props) {
+export function LineChart({ files, type }: Props) {
   const timestamps = uniq(
-    streams.flatMap((stream) => stream.data.map((d) => d.timestamp))
+    files.flatMap((file) => file[type]!.data.map((d) => d.timestamp))
   );
 
   const firstTimestamp = Math.min(...timestamps);
@@ -28,12 +29,12 @@ export function LineChart({ streams }: Props) {
     timestamp: (t - firstTimestamp) / 60,
 
     ...Object.fromEntries(
-      streams
-        .map((stream, si) => {
+      files
+        .map((file) => {
           // @ts-ignore
-          const value = stream.data.find((d) => d.timestamp === t)?.value;
+          const value = file[type]!.data.find((d) => d.timestamp === t)?.value;
           if (value !== undefined) {
-            return [`s${si}`, value];
+            return [file.id, value];
           }
 
           return null;
@@ -72,15 +73,15 @@ export function LineChart({ streams }: Props) {
             formatter={(value: number) => Math.round(value)}
           />
           <Legend />
-          {streams.map((s, si) => (
+          {files.map((file, fileIndex) => (
             <Line
-              key={si}
+              key={file.id}
               type="monotone"
-              dataKey={`s${si}`}
+              dataKey={file.id}
               isAnimationActive={false}
               dot={false}
-              stroke={COLORS[si % COLORS.length]}
-              name={s.name}
+              stroke={COLORS[fileIndex % COLORS.length]}
+              name={file.name}
             />
           ))}
         </LineChartComponent>
