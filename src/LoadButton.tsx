@@ -40,6 +40,7 @@ export function LoadButton({ addGPXData }: Props) {
         type="file"
         accept=".gpx"
         ref={inputRef}
+        multiple
         onChange={handleFileChange}
         className={styles.Input}
       />
