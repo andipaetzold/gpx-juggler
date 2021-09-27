@@ -12,8 +12,13 @@ import { useStore } from "./store";
 import { StreamEditor } from "./StreamEditor";
 
 export function Editor() {
+  const fileCount = useStore((state) => state.files.length);
   const [name, setName] = useStore((s) => [s.name, s.setName]);
   const [type, setType] = useStore((s) => [s.type, s.setType]);
+
+  if (fileCount === 0) {
+    return null;
+  }
 
   return (
     <Stack spacing={2} direction="column">
