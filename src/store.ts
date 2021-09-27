@@ -58,6 +58,8 @@ export const useStore = create<State>((set) => ({
       });
 
       return {
+        name: state.files.length === 0 ? data.name : state.name,
+        type: state.files.length === 0 ? data.type : state.type,
         files: [...state.files, { ...data, id }],
         streams: {
           cadence: addFileToStream("cadence"),
