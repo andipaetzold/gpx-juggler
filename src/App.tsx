@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Container, Stack, Toolbar, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { Editor } from "./Editor";
 import { LoadButton } from "./LoadButton";
@@ -22,23 +22,27 @@ export function App() {
         </Toolbar>
       </AppBar>
       <Container>
-        <LoadButton addGPXData={addGPXData} />
-        <SaveButton
-          data={{
-            name: "Test",
-            type: 5,
-            coordinate: {
-              type: "coordinate",
-              data: [
-                {
-                  timestamp: 0,
-                  value: [0, 0],
+        <Stack spacing={2} direction="column">
+          <Stack spacing={2} direction="row">
+            <LoadButton addGPXData={addGPXData} />
+            <SaveButton
+              data={{
+                name: "Test",
+                type: 5,
+                coordinate: {
+                  type: "coordinate",
+                  data: [
+                    {
+                      timestamp: 0,
+                      value: [0, 0],
+                    },
+                  ],
                 },
-              ],
-            },
-          }}
-        />
-        {gpxData.length > 0 && <Editor gpxData={gpxData} />}
+              }}
+            />
+          </Stack>
+          {gpxData.length > 0 && <Editor gpxData={gpxData} />}
+        </Stack>
       </Container>
     </>
   );

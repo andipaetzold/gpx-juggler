@@ -3,10 +3,11 @@ import {
   CardContent,
   MenuItem,
   Select,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { LineChart } from "./charts/LineChart";
 import { ACTIVITY_TYPE, STREAM_TYPES } from "./constants";
 import { GPXData, Stream, StreamType } from "./types";
@@ -20,8 +21,8 @@ export function Editor({ gpxData }: Props) {
   const [type, setType] = useState(gpxData[0].type);
 
   return (
-    <>
-      <Card sx={{ mb: 3 }}>
+    <Stack spacing={2} direction="column">
+      <Card>
         <CardContent>
           <TextField
             value={name}
@@ -65,7 +66,7 @@ export function Editor({ gpxData }: Props) {
           </Card>
         );
       })}
-    </>
+    </Stack>
   );
 }
 
