@@ -9,7 +9,7 @@
     "@mui/material": "5.0.4",
     "@types/file-saver": "2.0.3",
     "@types/lodash": "4.14.176",
-    "@types/react": "17.0.21",
+    "@types/react": "17.0.31",
     "@types/react-dom": "17.0.10",
     "@types/recharts": "1.8.20",
     "date-fns": "2.24.0",
