@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "11.7.0",
     "@emotion/styled": "11.6.0",
-    "@mui/material": "5.2.2",
+    "@mui/material": "5.2.3",
     "@types/file-saver": "2.0.4",
     "@types/lodash": "4.14.177",
     "@types/react": "17.0.37",
