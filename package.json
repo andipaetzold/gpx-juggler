@@ -55,7 +55,7 @@
     "@testing-library/react": "12.1.5",
     "@testing-library/user-event": "14.1.1",
     "@tsconfig/create-react-app": "1.0.2",
-    "@types/jest": "27.4.1",
+    "@types/jest": "27.5.0",
     "@types/node": "16.11.33",
     "husky": "7.0.4",
     "jest-extended": "2.0.0",
