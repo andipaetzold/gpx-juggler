@@ -11,7 +11,7 @@
     "@types/lodash": "4.14.200",
     "@types/react": "17.0.69",
     "@types/react-dom": "17.0.22",
-    "@types/recharts": "1.8.26",
+    "@types/recharts": "1.8.29",
     "date-fns": "2.30.0",
     "fast-xml-parser": "3.21.1",
     "file-saver": "2.0.5",
