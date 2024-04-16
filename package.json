@@ -12,7 +12,7 @@
     "@types/react": "17.0.80",
     "@types/react-dom": "17.0.25",
     "@types/recharts": "1.8.29",
-    "date-fns": "2.30.0",
+    "date-fns": "3.6.0",
     "fast-xml-parser": "3.21.1",
     "file-saver": "2.0.5",
     "lodash": "4.17.21",
