@@ -58,7 +58,7 @@
     "@types/jest": "27.5.2",
     "@types/node": "18.19.68",
     "husky": "7.0.4",
-    "jest-extended": "2.0.0",
+    "jest-extended": "4.0.2",
     "lint-staged": "12.5.0",
     "prettier": "2.8.8",
     "sass": "1.82.0",
